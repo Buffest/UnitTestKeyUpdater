@@ -54,9 +54,11 @@ namespace Microsoft.Dynamics.Jiantzha
             string[] originalContent = File.ReadAllLines(filePath);
             string[] updatedContent = UpdateTestKeys(originalContent);
 
+            string fullText = File.ReadAllText(filePath);
+
             using (StreamWriter writer = new StreamWriter(filePath)) {
                 for (int i = 0; i < updatedContent.Length; i++) {
-                    if (i == updatedContent.Length - 1) {
+                    if (i == updatedContent.Length - 1 && !fullText.EndsWith(Environment.NewLine)) {
                         writer.Write(updatedContent[i]);
                     }
                     else {
