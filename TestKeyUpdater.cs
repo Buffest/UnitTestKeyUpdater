@@ -50,10 +50,20 @@ namespace Microsoft.Dynamics.Jiantzha
             {
                 removeReadOnly(filePath);
             }
-
+            
             string[] originalContent = File.ReadAllLines(filePath);
             string[] updatedContent = UpdateTestKeys(originalContent);
-            File.WriteAllLines(filePath, updatedContent);
+
+            using (StreamWriter writer = new StreamWriter(filePath)) {
+                for (int i = 0; i < updatedContent.Length; i++) {
+                    if (i == updatedContent.Length - 1) {
+                        writer.Write(updatedContent[i]);
+                    }
+                    else {
+                        writer.WriteLine(updatedContent[i]);
+                    }
+                }
+            }
 
             if (fileIsReadOnly)
             {
